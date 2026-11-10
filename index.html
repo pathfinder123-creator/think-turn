@@ -622,7 +622,9 @@ function pickSituation() {
       `<button class="topic" type="button" data-topic="${key}" aria-pressed="${key === topic}"><strong>${item.title}</strong><span>${item.hint}</span></button>`).join('')}</div>
     <label for="situation" class="note">A few words about your situation <span class="fine" id="situation-hint">(optional)</span></label>
     <textarea id="situation" rows="2" maxlength="500" placeholder="Example: A neighbor asked me to help plan a local event.">${escapeHtml(situation)}</textarea>
-    <div class="actions">${button('Back to check-in','check','secondary')}${button('Open my deck','open')}</div>`);
+    <div class="actions">${button('Back to check-in','check','secondary')}${button('Open my deck','open')}</div>`, false);
+  panel.focus({preventScroll: true});
+  document.querySelector('main').scrollIntoView({block: 'start', behavior: 'instant'});
   const open = document.getElementById('open');
   const description = document.getElementById('situation');
   const updateSituation = () => {
