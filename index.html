@@ -1,0 +1,801 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="theme-color" content="#132536">
+<meta name="apple-mobile-web-app-title" content="ThinkTurn">
+<link rel="manifest" href="./manifest.webmanifest">
+<link rel="icon" type="image/svg+xml" href="./icons/icon.svg">
+<link rel="apple-touch-icon" sizes="180x180" href="./icons/icon-180.png">
+<title>ThinkTurn | Guided reflection</title>
+<style>
+:root{color-scheme:light;--ink:#192837;--paper:#f8f5ee;--white:#fffdf7;--navy:#132536;--muted:#4a5b66;--line:#d7d9ce;--orange:#ffaf82;--teal:#c4e3d8;--radius:22px}
+*{box-sizing:border-box}body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 system-ui,sans-serif}button,input,textarea,select{font:inherit}button,select{cursor:pointer}button{min-height:44px}button:focus-visible,a:focus-visible,#existing-code:focus-visible,textarea:focus-visible,select:focus-visible,input:focus-visible+span{outline:3px solid #137b70;outline-offset:4px}button:disabled{opacity:.48;cursor:default}h1,h2,h3,p{margin:0}h1,h2{font-family:Georgia,serif;font-weight:normal;line-height:1.05}h1{font-size:clamp(3rem,8vw,6.2rem);letter-spacing:-.065em}h2{font-size:clamp(2.1rem,5vw,3.25rem);letter-spacing:-.045em}h3{line-height:1.28}.wrap{width:min(1090px,calc(100% - 36px));margin:auto}.hero{background:var(--navy);color:#fff8e9;border-bottom:5px solid var(--orange);overflow:hidden}.mast{padding:21px 0;border-bottom:1px solid #ffffff30;display:flex;justify-content:space-between;gap:10px;align-items:center}.mark,.eyebrow,.step-number,.phase{font-size:.76rem;letter-spacing:.13em;text-transform:uppercase;font-weight:800}.mark{color:var(--orange)}.mast small{color:var(--teal)}.hero-grid{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1.2fr);align-items:center;gap:18px;padding:32px 0 35px}.hero p{color:#e0e9e9;max-width:47ch;margin-top:16px;font-size:1.08rem}.hero .subtitle{font-family:Georgia,serif;color:var(--teal);font-size:clamp(1.35rem,3vw,2rem);line-height:1.18;margin-top:8px}.art{width:min(100%,560px);height:auto;justify-self:center;display:block}.progress{margin:25px 0 18px;padding:0;list-style:none;display:grid;grid-template-columns:repeat(4,1fr);gap:7px}.progress li{color:var(--muted);border-top:3px solid var(--line);padding-top:6px;font-size:.82rem}.progress li[aria-current=step]{color:var(--ink);border-color:#167568;font-weight:800}.step-number{margin-right:.35rem}.panel{background:var(--white);border:1px solid var(--line);border-radius:var(--radius);padding:clamp(18px,4vw,44px);box-shadow:0 8px 24px #1a2d3810}.panel:focus{outline:0}.eyebrow{color:#3d695f;margin-bottom:9px}.lede{max-width:65ch;color:var(--muted);margin:11px 0 22px}.actions{display:flex;flex-wrap:wrap;gap:12px;align-items:center;margin-top:24px}.btn{border:1px solid var(--navy);border-radius:50px;padding:10px 19px;background:var(--navy);color:#fff;font-weight:750}.btn:not(:disabled):hover{background:#27475d}.btn.secondary{background:transparent;color:var(--ink);border-color:#a5b3b3}.btn.secondary:hover:not(:disabled){background:#edf3ee}.btn.accent{color:var(--navy);background:var(--orange);border-color:var(--orange)}.btn.accent:hover{background:#ffc3a1}.fine{font-size:.87rem;color:var(--muted)}footer{padding:18px 0 30px}.notice{background:#eef5ee;border:1px solid #cbdccd;border-radius:14px;padding:13px 16px;margin:15px 0}.scoreline{display:flex;flex-wrap:wrap;gap:7px;margin:14px 0}.chip{display:inline-block;padding:2px 8px;border-radius:6px;background:var(--tone,var(--teal));color:var(--chip-ink,var(--navy));font-weight:800}.tiles,.topics{display:grid;gap:12px;margin:18px 0}.tiles{grid-template-columns:repeat(3,minmax(0,1fr))}.tile{border:1px solid var(--line);border-top:5px solid var(--line);padding:16px;border-radius:14px}.top-interest{border-top-color:var(--tone);background:color-mix(in srgb,var(--tone) 8%,var(--white))}.tile h3{margin:9px 0 2px}.tile p{margin-top:9px}.order{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;margin-top:16px}.order label{display:grid;gap:5px;font-weight:650}.order select,textarea{width:100%;border:1px solid #94a5a6;border-radius:9px;background:white;color:var(--ink);padding:9px}.error{color:#a33524;margin-top:9px;font-weight:650}.topics{grid-template-columns:repeat(2,minmax(0,1fr))}.topic{padding:15px;border:1px solid var(--line);background:white;color:var(--ink);border-radius:14px;text-align:left}.topic:hover,.topic[aria-pressed=true]{border-color:#26786c;background:#eef7f1}.topic strong,.topic span{display:block}.topic span{color:var(--muted);font-size:.92rem}.questions{display:grid;gap:12px}.item{border:1px solid var(--line);margin:0;padding:12px 14px;border-radius:14px;min-width:0}.item legend{font-weight:750;padding:0 5px}.scale{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:6px}.scale label{position:relative;cursor:pointer}.scale input{position:absolute;opacity:0}.scale span{display:grid;place-content:center;text-align:center;min-height:48px;border-radius:8px;border:1px solid var(--line);padding:4px;background:white;font-size:.83rem;line-height:1.2}.scale input:checked+span{background:var(--teal);border-color:#26786c;font-weight:800}.meter{width:100%;height:8px;accent-color:#247569;margin:0 0 13px}.deck{background:var(--navy);color:#fff8e9;border-radius:18px;padding:clamp(18px,4vw,36px);margin:16px 0;min-height:224px;border-left:6px solid var(--tone,var(--orange))}.deck p{margin:10px 0}.deck .phase{color:var(--teal)}.deck h3{font-family:Georgia,serif;font-weight:normal;font-size:clamp(1.45rem,4vw,2.15rem);margin:12px 0}.deck .fine{color:#d7e4e5}.deck .btn.secondary{color:white}.deck .btn.secondary:hover{color:var(--navy)}.note{display:block;font-weight:750;margin:12px 0 5px}.favorite{display:flex;align-items:center;gap:8px;margin-top:12px}.favorite input{width:20px;height:20px;accent-color:#26786c}.recap{padding:0;list-style:none}.recap li{padding:12px 0;border-bottom:1px solid var(--line)}.recap p{white-space:pre-wrap;overflow-wrap:anywhere;margin-top:5px}.recap strong{display:block}.custom{margin-top:14px}
+.deeper{margin-top:13px}.deeper #follow-up{margin-top:9px;padding:14px 16px;background:#eef5ee;border:1px solid #cbdccd;border-radius:12px}.code-entry{display:flex;flex-wrap:wrap;align-items:center;gap:8px;margin-top:8px}#existing-code{width:8rem;min-height:44px;border:1px solid #94a5a6;border-radius:9px;background:white;color:var(--ink);padding:8px 10px;text-transform:uppercase}.notice .actions{margin-top:8px}@media(max-width:650px){.hero-grid{grid-template-columns:minmax(0,1fr);gap:14px;padding:24px 0 18px}.art{width:min(100%,380px)}.hero p{font-size:.94rem}.mast small{font-size:.73rem}.tiles,.topics,.order{grid-template-columns:1fr}.step-number{display:block}.progress li{font-size:.73rem}.scale span{font-size:.7rem;min-height:55px}.item{padding:8px}.wrap{width:calc(100% - 24px)}}
+
+@media print{.hero,.progress,.actions,footer{display:none}.panel{box-shadow:none;border:0;padding:0}.wrap{width:100%}}
+</style>
+</head>
+<body>
+<header class="hero">
+  <div class="wrap">
+    <div class="mast"><div class="mark">◈ &nbsp; Guided reflection</div><small>RIASEC interest lenses</small></div>
+    <div class="hero-grid">
+      <div><h1>ThinkTurn</h1><p class="subtitle">Look through a new lens</p><p>Discover your interests and the ways of thinking that support them. Bring a situation to mind and turn over a few cards to explore it through your lenses.</p></div>
+      <svg class="art" viewBox="0 0 628 334" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true">
+        <defs>
+          <g id="wrench">
+            <path d="M34 8a13 13 0 0 0-16 16L5 37a5 5 0 1 0 7 7l13-13A13 13 0 0 0 41 15l-8 8-7-7Z"/>
+          </g>
+          <g id="flask">
+            <path d="M17 5h16m-13 0v14L8 38a4 4 0 0 0 3 6h28a4 4 0 0 0 3-6L30 19V5M14 30h22"/>
+            <circle cx="24" cy="36" r="1.4" fill="currentColor" stroke="none"/>
+            <circle cx="31" cy="39" r="1.4" fill="currentColor" stroke="none"/>
+          </g>
+          <g id="palette">
+            <path d="M25 6C13 6 5 14 5 26s9 20 20 20c7 0 10-4 7-8s1-7 5-6c5 1 9-2 9-7C46 14 37 6 25 6Z"/>
+            <g fill="currentColor" stroke="none"><circle cx="15" cy="25" r="2.8"/><circle cx="19" cy="16" r="2.8"/><circle cx="29" cy="15" r="2.8"/><circle cx="37" cy="21" r="2.8"/></g>
+          </g>
+          <g id="people">
+            <circle cx="18" cy="17" r="7"/><circle cx="35" cy="20" r="5"/>
+            <path d="M5 39c0-7 6-12 13-12s13 5 13 12v3H5Zm27-10c8-1 13 4 13 10v3h-9"/>
+          </g>
+          <g id="archery-target">
+            <path d="M40.8 18.1A19 19 0 1 1 32.9 10.2M34.6 21.4A12 12 0 1 1 29.6 16.4"/>
+            <path d="M45 6 24 27m0-8v8h8"/>
+          </g>
+          <g id="checklist">
+            <rect x="9" y="6" width="32" height="38" rx="4"/>
+            <path d="m15 18 2 2 5-5m-7 14 2 2 5-5m4-8h8m-8 11h8m-8 7h8"/>
+          </g>
+        </defs>
+        <path d="M18 196C76 100 179 34 314 29S549 100 610 196M44 289c151 50 382 51 540 0" fill="none" stroke="#81aaae" stroke-width="1.5" opacity=".58"/>
+        <path d="M64 102v16m-8-8h16m482-12v16m-8-8h16m-37 198v14m-7-7h14" fill="none" stroke="#ffaf82" stroke-width="2" stroke-linecap="round"/>
+        <g transform="translate(91 217) rotate(-26)" style="color:#132536">
+          <rect x="-50" y="-72" width="108" height="155" rx="13" fill="#081520" opacity=".52"/>
+          <rect x="-54" y="-78" width="108" height="155" rx="13" fill="#3AB54A" stroke="#132536" stroke-width="3"/>
+          <rect x="-48" y="-72" width="96" height="143" rx="9" fill="none" stroke="#132536" stroke-width="1" opacity=".38"/>
+          <text x="-38" y="-45" fill="#132536" font-family="system-ui, sans-serif" font-weight="800" font-size="22">R</text>
+          <use href="#wrench" xlink:href="#wrench" x="-26" y="-24" fill="none" stroke="currentColor" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <g transform="translate(174 157) rotate(-17)" style="color:#fff">
+          <rect x="-50" y="-72" width="108" height="155" rx="13" fill="#081520" opacity=".52"/>
+          <rect x="-54" y="-78" width="108" height="155" rx="13" fill="#BC1E2D" stroke="#132536" stroke-width="3"/>
+          <rect x="-48" y="-72" width="96" height="143" rx="9" fill="none" stroke="#fff" stroke-width="1" opacity=".38"/>
+          <text x="-38" y="-45" fill="#fff" font-family="system-ui, sans-serif" font-weight="800" font-size="22">I</text>
+          <use href="#flask" xlink:href="#flask" x="-34" y="-24" fill="none" stroke="currentColor" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <g transform="translate(266 122) rotate(-6)" style="color:#132536">
+          <rect x="-50" y="-72" width="108" height="155" rx="13" fill="#081520" opacity=".52"/>
+          <rect x="-54" y="-78" width="108" height="155" rx="13" fill="#FCB042" stroke="#132536" stroke-width="3"/>
+          <rect x="-48" y="-72" width="96" height="143" rx="9" fill="none" stroke="#132536" stroke-width="1" opacity=".38"/>
+          <text x="-38" y="-45" fill="#132536" font-family="system-ui, sans-serif" font-weight="800" font-size="22">A</text>
+          <use href="#palette" xlink:href="#palette" x="-26" y="-24" fill="none" stroke="currentColor" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <g transform="translate(362 122) rotate(6)" style="color:#fff">
+          <rect x="-50" y="-72" width="108" height="155" rx="13" fill="#081520" opacity=".52"/>
+          <rect x="-54" y="-78" width="108" height="155" rx="13" fill="#93268F" stroke="#132536" stroke-width="3"/>
+          <rect x="-48" y="-72" width="96" height="143" rx="9" fill="none" stroke="#fff" stroke-width="1" opacity=".38"/>
+          <text x="-38" y="-45" fill="#fff" font-family="system-ui, sans-serif" font-weight="800" font-size="22">S</text>
+          <use href="#people" xlink:href="#people" x="-26" y="-24" fill="none" stroke="currentColor" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <g transform="translate(454 157) rotate(17)" style="color:#132536">
+          <rect x="-50" y="-72" width="108" height="155" rx="13" fill="#081520" opacity=".52"/>
+          <rect x="-54" y="-78" width="108" height="155" rx="13" fill="#F15928" stroke="#132536" stroke-width="3"/>
+          <rect x="-48" y="-72" width="96" height="143" rx="9" fill="none" stroke="#132536" stroke-width="1" opacity=".38"/>
+          <text x="-38" y="-45" fill="#132536" font-family="system-ui, sans-serif" font-weight="800" font-size="22">E</text>
+          <use href="#archery-target" xlink:href="#archery-target" x="-26" y="-24" fill="none" stroke="currentColor" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <g transform="translate(537 217) rotate(26)" style="color:#fff">
+          <rect x="-50" y="-72" width="108" height="155" rx="13" fill="#081520" opacity=".52"/>
+          <rect x="-54" y="-78" width="108" height="155" rx="13" fill="#1D75BC" stroke="#132536" stroke-width="3"/>
+          <rect x="-48" y="-72" width="96" height="143" rx="9" fill="none" stroke="#fff" stroke-width="1" opacity=".38"/>
+          <text x="-38" y="-45" fill="#fff" font-family="system-ui, sans-serif" font-weight="800" font-size="22">C</text>
+          <use href="#checklist" xlink:href="#checklist" x="-26" y="-24" fill="none" stroke="currentColor" stroke-width="3.1" stroke-linecap="round" stroke-linejoin="round"/>
+        </g>
+        <g>
+          <path d="m384 207 38 37" fill="none" stroke="#081520" stroke-width="22" stroke-linecap="round"/>
+          <path d="m384 204 38 37" fill="none" stroke="#e2eee8" stroke-width="13" stroke-linecap="round"/>
+          <path d="m421 240 53 51" fill="none" stroke="#081520" stroke-width="34" stroke-linecap="round"/>
+          <path d="m421 236 53 51" fill="none" stroke="#84b5ac" stroke-width="23" stroke-linecap="round"/>
+          <path d="m422 231 53 51" fill="none" stroke="#d5eee2" stroke-width="4" stroke-linecap="round" opacity=".8"/>
+          <circle cx="305" cy="133" r="114" fill="#081520" fill-opacity=".14" stroke="#081520" stroke-width="13"/>
+          <circle cx="305" cy="128" r="113" fill="#e3faf7" fill-opacity=".16" stroke="#c4e3d8" stroke-width="7"/>
+          <circle cx="305" cy="128" r="104" fill="none" stroke="#f4fff8" stroke-width="1.5" opacity=".52"/>
+          <path d="M220 74a101 101 0 0 1 62-42m41 0 9 2" fill="none" stroke="#fff" stroke-width="4" stroke-linecap="round" opacity=".82"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+</header>
+<main class="wrap">
+  <ol class="progress" aria-label="Session steps">
+    <li><span class="step-number">01</span> Assessment</li><li><span class="step-number">02</span> Check-in</li><li><span class="step-number">03</span> Situation</li><li><span class="step-number">04</span> Reflection</li>
+  </ol>
+  <section id="panel" class="panel" tabindex="-1" aria-labelledby="panel-title"></section>
+</main>
+<footer class="wrap fine">Your answers and notes stay in this tab for this session. Download or print your reflection if you want to keep it.  <details id="install-help" hidden style="margin-top:8px">
+    <summary>Install on your device</summary>
+    <p>On iPhone, open this page in Safari and use Share, then Add to Home Screen. Turn on Open as Web App if that option appears.</p>
+    <p>On Android or desktop, look for Install or Add to Home screen in your browser menu.</p>
+    <button type="button" class="btn secondary" id="install-app" hidden>Install ThinkTurn</button>
+  </details>
+</footer>
+<script>
+const QUESTIONS = [
+  {t:"S",q:"Teaching, coaching, or explaining something to someone"},
+  {t:"R",q:"Repairing or maintaining vehicles, engines, or machinery"},
+  {t:"C",q:"Organizing records, files, schedules, or data"},
+  {t:"A",q:"Designing, drawing, or creating original visual work"},
+  {t:"I",q:"Researching how or why something works"},
+  {t:"E",q:"Persuading others or selling an idea, product, or service"},
+  {t:"I",q:"Solving complex problems using data, logic, or experiments"},
+  {t:"E",q:"Leading a team or managing a project to reach a goal"},
+  {t:"A",q:"Writing, composing music, or performing creatively"},
+  {t:"C",q:"Following clear procedures and checking work for accuracy"},
+  {t:"S",q:"Helping someone work through a personal or health-related problem"},
+  {t:"R",q:"Building, installing, or fixing things with hand or power tools"},
+  {t:"C",q:"Managing budgets, spreadsheets, or detailed reports"},
+  {t:"A",q:"Coming up with new, unconventional ideas or designs"},
+  {t:"R",q:"Operating equipment or doing hands-on physical work outdoors"},
+  {t:"S",q:"Volunteering or caring for people in your community"},
+  {t:"E",q:"Starting or running your own business"},
+  {t:"I",q:"Analyzing scientific findings or diagnosing a technical issue"}
+];
+const DESCRIPTIONS = {
+  R: {intelligence:'Practical Intelligence', description:'You enjoy working with your hands, being outdoors, using tools, and operating machinery. You have a natural interest in how things work and a knack for building, handling, and fixing things. Your practical intelligence helps you solve problems through hands-on activity and produce useful, tangible results.'},
+  I: {intelligence:'Analytical Intelligence', description:'You enjoy asking questions, exploring ideas, gathering information, and figuring out why things happen. You are curious about how the world works and like solving problems that require careful thought and investigation. Your analytical intelligence helps you recognize patterns, evaluate evidence, and discover explanations and solutions.'},
+  A: {intelligence:'Creative Intelligence', description:'You enjoy imagining possibilities, expressing ideas, designing, and creating something original. You appreciate opportunities to use your imagination and explore different ways of seeing or doing things. Your creative intelligence helps you recognize possibilities, develop fresh ideas, and bring imagination into meaningful expression.'},
+  S: {intelligence:'Relational Intelligence', description:'You enjoy helping, teaching, encouraging, and working with other people. You are interested in understanding people’s needs, building relationships, and making a positive difference in their lives. Your relational intelligence helps you connect with others, communicate with understanding, and support their learning, growth, and well-being.'},
+  E: {intelligence:'Strategic Intelligence', description:'You enjoy taking initiative, influencing others, leading activities, and turning ideas into action. You are drawn to opportunities to make decisions, pursue goals, and inspire others to work toward a shared purpose. Your strategic intelligence helps you recognize opportunities, anticipate possibilities, and manage people and resources to achieve results.'},
+  C: {intelligence:'Organizing Intelligence', description:'You enjoy organizing information, managing details, following procedures, and keeping things running smoothly. You appreciate accuracy, consistency, and creating order out of complexity. Your organizing intelligence helps you recognize structure, develop reliable systems, and manage information and activities with care and efficiency.'}
+};
+
+const TYPES = {
+  R: ['Realistic', '#3AB54A', '#132536'], I: ['Investigative', '#BC1E2D', '#fff'],
+  A: ['Artistic', '#FCB042', '#132536'], S: ['Social', '#93268F', '#fff'],
+  E: ['Enterprising', '#F15928', '#132536'], C: ['Conventional', '#1D75BC', '#fff']
+};
+const LETTERS = Object.keys(TYPES);
+const SCALE = ['Strongly dislike', 'Dislike', 'Neutral', 'Like', 'Strongly like'];
+const RANKS = ['First', 'Second', 'Third'];
+
+// Each situation supplies a different opening question for each possible lead lens.
+const TOPICS = {
+  opportunity: {
+    title: 'An opportunity has come up',
+    hint: 'A new role, invitation, project, or chance to try something.',
+    open: {
+      R: ["Which parts of this role would you enjoy doing?", "Which task would still appeal to you after the first few weeks?"],
+      I: ["What do you know about this opportunity?", "Which part of what you think you know is still a guess?"],
+      A: ["What could you create through this opportunity?", "Which part would you want to make your own?"],
+      S: ["Who would be affected if you took this on?", "What might they need from you?"],
+      E: ["What would you hope to make happen in this role?", "Which decisions would you need a say in?"],
+      C: ["What would this opportunity ask of you each week?", "What would it ask of you during a busy week?"]
+    },
+    options: {
+      R: ["How could you try a small part of the role first?", "What would that trial tell you about the rest of the role?"],
+      I: ["How could you learn what the role really involves?", "Who could tell you what it’s like from experience?"],
+      A: ["How could you shape the role to fit your ideas?", "What would you keep if you had less time for the role?"],
+      S: ["How could taking part help both you and others?", "Where might their needs and yours pull in different directions?"],
+      E: ["How could you share or reshape the role?", "Which part would you want to lead?"],
+      C: ["How could this role fit with your other plans?", "What would you need to move or set aside?"]
+    }
+  },
+  choice: {
+    title: 'I’m weighing a choice',
+    hint: 'Two or more paths look possible.',
+    open: {
+      R: ["What would a normal day look like with each choice?", "Which daily task would you most look forward to?"],
+      I: ["What seems to be the biggest difference between your choices?", "What makes you think that difference is real?"],
+      A: ["What choices have you thought of so far?", "What have you ruled out too quickly?"],
+      S: ["Who might be affected by each choice?", "How might their priorities differ from yours?"],
+      E: ["What do you want this choice to help you do?", "Which result matters most to you?"],
+      C: ["What does each choice require of you?", "Which requirement might be hardest to meet?"]
+    },
+    options: {
+      R: ["How could you test each option on a small scale?", "What would help you tell which one fits?"],
+      I: ["What could you find out to compare the choices better?", "Which answer would actually change your mind?"],
+      A: ["Could you combine your favorite parts of two choices?", "What would you have to give up to make that work?"],
+      S: ["Who might help you see a choice you missed?", "What could you ask them about it?"],
+      E: ["Which choice would let you change course later?", "What would it take to change course after you decide?"],
+      C: ["How would different timing change your choices?", "Which deadline could move, and which is fixed?"]
+    }
+  },
+  challenge: {
+    title: 'I’m facing a challenge',
+    hint: 'Something is difficult, stuck, or getting in the way.',
+    open: {
+      R: ["When do you notice the problem most?", "What happens just before it shows up?"],
+      I: ["What have you seen or heard for yourself?", "What are you still guessing about?"],
+      A: ["How else could you describe the problem?", "What does that new description help you notice?"],
+      S: ["Who else is dealing with this problem?", "How might they see it differently?"],
+      E: ["Which part of the problem can you change yourself?", "Which part would need someone else’s agreement?"],
+      C: ["Where do things start to get harder?", "Does the problem tend to start at the same step?"]
+    },
+    options: {
+      R: ["What small change could you try?", "What would tell you the change helped?"],
+      I: ["What are two possible causes of the problem?", "What could you check to tell them apart?"],
+      A: ["What might work if you set aside your usual approach?", "What part of the new idea could you try first?"],
+      S: ["What might help the people most affected?", "How could you find out if that would help them?"],
+      E: ["Who might help you tackle the problem?", "What could you ask them to do?"],
+      C: ["What could you change about the order of the steps?", "What would need to happen first for that change to work?"]
+    }
+  },
+  direction: {
+    title: 'I’m exploring a new direction',
+    hint: 'A change is on your mind, even if the destination is unclear.',
+    open: {
+      R: ["What activities would you like more of each week?", "Which would you enjoy even on a tiring day?"],
+      I: ["What question about your future keeps coming up?", "What makes that question matter now?"],
+      A: ["What do you picture yourself doing in this new direction?", "Which part of that picture feels most like you?"],
+      S: ["Who would you like to work with or help?", "What would you like those people to count on you for?"],
+      E: ["What would you like more say in as you move forward?", "What responsibility would you welcome in return?"],
+      C: ["What would you want to keep in your routine?", "Which part of it matters most to protect?"]
+    },
+    options: {
+      R: ["What activity could give you a feel for this direction?", "What would you pay attention to while trying it?"],
+      I: ["How could you find out what daily life in this direction is like?", "What could you learn from someone who has tried it?"],
+      A: ["Could you build a new direction around two interests?", "What could bring those interests together in one project?"],
+      S: ["Where could you meet people doing work that interests you?", "What would you want to learn from them?"],
+      E: ["What could you do to open up a new opportunity?", "Who would need to agree or help?"],
+      C: ["Where could you make time to explore a new direction?", "What could move to free up that time?"]
+    }
+  },
+  learning: {
+    title: 'I’m choosing what to learn',
+    hint: 'A skill, hobby, class, or training program.',
+    open: {
+      R: ["What would you enjoy practicing or making?", "Would you still enjoy it while learning the basics?"],
+      I: ["What topic would you enjoy learning more about?", "Which question about it keeps you curious?"],
+      A: ["What would you like to learn to make or express?", "What would you make first if you had that skill?"],
+      S: ["What would you enjoy learning with others?", "Who could you share what you learn with?"],
+      E: ["What would you like to be able to take on after you learn this?", "Which part of that responsibility excites you?"],
+      C: ["What kind of routine helps you learn well?", "When would you most need feedback or support?"]
+    },
+    options: {
+      R: ["How could you try a little of the work before you choose?", "What would help you tell if you like the work itself?"],
+      I: ["How could you find out what each option would teach you?", "What could you learn by trying a short lesson or activity?"],
+      A: ["Which way of learning would let you design your own project?", "How much freedom would you want with that project?"],
+      S: ["Would you rather learn alone, with a guide, or in a group?", "What kind of help would make the biggest difference?"],
+      E: ["Where could you use the new skill for a goal you care about?", "How could you tell that your learning is helping you reach that goal?"],
+      C: ["Which way of learning fits your schedule?", "What would it ask of you in a busy week?"]
+    }
+  },
+  work: {
+    title: 'I’m considering a change at work',
+    hint: 'Different responsibilities, a new workplace, or a return to work.',
+    open: {
+      R: ["Which tasks would you keep in your workday?", "Which of those tasks would you most miss doing?"],
+      I: ["When does your work hold your interest?", "What do those moments have in common?"],
+      A: ["How would you like to use your ideas at work?", "Where do you want more room to do things your own way?"],
+      S: ["What kinds of work relationships would you like more of?", "Which relationships help you do your best work?"],
+      E: ["What would you like to have more say in at work?", "Which decisions would you be willing to take responsibility for?"],
+      C: ["What matters most about how and where you work?", "Which would be hardest to give up?"]
+    },
+    options: {
+      R: ["What change in tasks or tools would make your day better?", "What would you notice on a typical day after the change?"],
+      I: ["How could you learn what a different role is like day to day?", "What would help you tell if it solves the problem you have now?"],
+      A: ["Could one role combine two kinds of work you enjoy?", "What would need to be part of that role for it to feel right?"],
+      S: ["Who could you talk to about a team that interests you?", "What could you ask about how people work together there?"],
+      E: ["What could you change in your current role?", "Which change would need support from someone else?"],
+      C: ["Could different hours, tasks, or a new location help?", "Which change would help without making other parts of your day harder?"]
+    }
+  },
+  conversation: {
+    title: 'I’m preparing for a difficult conversation',
+    hint: 'A disagreement, an awkward topic, or something important to say.',
+    open: {
+      R: ["How would you describe what happened?", "What did you see or hear for yourself?"],
+      I: ["What do you know about how the other person sees it?", "Which parts of their view are you guessing about?"],
+      A: ["How would you explain what matters to you in your own words?", "Which words sound most like you?"],
+      S: ["What do you hope you and the other person understand about each other?", "What could you ask to understand their point of view?"],
+      E: ["What do you hope will change after you talk?", "Which part of that result can you affect?"],
+      C: ["Which parts of the issue need to be discussed now?", "If there’s only time for one point, which would it be?"]
+    },
+    options: {
+      R: ["What example could help explain your experience?", "How could you describe it in words you both might recognize?"],
+      I: ["What could you ask to understand their view better?", "What answer might change how you see what happened?"],
+      A: ["What are two ways you could start the conversation?", "Which opening feels honest and leaves room for a reply?"],
+      S: ["What might help you both say what matters?", "How would you know the other person feels heard?"],
+      E: ["What result would be good enough if you can’t agree?", "What would count as a first sign of progress?"],
+      C: ["When and where would it be easier to talk?", "What would help you stay on the topic you chose?"]
+    }
+  },
+  commitments: {
+    title: 'I’m juggling competing responsibilities',
+    hint: 'Work, school, family, caregiving, or commitments pulling in different directions.',
+    open: {
+      R: ["When do your responsibilities get in each other’s way?", "What work are you doing then that others might not see?"],
+      I: ["When do you feel most stretched?", "What do those times have in common?"],
+      A: ["What would a week with more breathing room look like?", "What would you want to keep from your busiest days?"],
+      S: ["Whose needs are you trying to meet?", "Which expectations have people actually shared with you?"],
+      E: ["Which commitments could you change?", "Who else would have a say in those changes?"],
+      C: ["Which commitments have fixed times or deadlines?", "Which ones could move without causing a problem?"]
+    },
+    options: {
+      R: ["What could you do with fewer steps?", "Which step could change without causing a new problem?"],
+      I: ["How could you tell whether you need more time or more energy?", "What would you look for during a typical week?"],
+      A: ["Which responsibility could you handle differently?", "What new way would still meet the need behind it?"],
+      S: ["What responsibility might you share with someone?", "What part would you feel comfortable asking them to take on?"],
+      E: ["What change could you ask for?", "What would make that request clear to the other person?"],
+      C: ["What could you move to make your week easier?", "Where would a little extra time help most?"]
+    }
+  },
+  transition: {
+    title: 'I’m adjusting to a life change',
+    hint: 'A move, a change at home, or a new season of life.',
+    open: {
+      R: ["What do you do differently on a normal day now?", "Which activity from before the change do you miss most?"],
+      I: ["What part of this change is still unclear to you?", "What has your experience already taught you about it?"],
+      A: ["What part of yourself do you want to carry into this change?", "How could you show that part of yourself in a new setting?"],
+      S: ["Which connections have changed for you?", "What kind of support would feel right now?"],
+      E: ["Which part of this change can you shape?", "Which part might need more time before you act?"],
+      C: ["Which routine has changed the most?", "What did that routine do for you?"]
+    },
+    options: {
+      R: ["What activity might help you feel at home in this new stage?", "How could you try it once and see how it feels?"],
+      I: ["What could you learn that would make the change easier?", "Where could you find a clear answer to one of your questions?"],
+      A: ["What new way of spending your time appeals to you?", "How could you make it feel like something of your own?"],
+      S: ["How could you keep in touch or get to know new people?", "Which kind of connection would you like to make room for first?"],
+      E: ["What might you be able to do now that you couldn’t before?", "Which part would you want to try first?"],
+      C: ["Which familiar routine might still fit?", "What small change would make it easier to keep?"]
+    }
+  },
+  habit: {
+    title: 'I want to change a habit or routine',
+    hint: 'Something you want to start, do more often, or make less room for.',
+    open: {
+      R: ["What usually happens just before the habit?", "What could you change in that moment?"],
+      I: ["When is the habit easier or harder to keep?", "What seems different about those times?"],
+      A: ["How could this routine feel more like yours?", "What would make it enjoyable on its own?"],
+      S: ["Who makes this habit easier or harder to keep?", "What kind of support feels helpful to you?"],
+      E: ["What would changing this habit help you do?", "Would that goal still matter on a hard day?"],
+      C: ["Where does this habit fit in a normal day?", "What could remind you it’s time to do it?"]
+    },
+    options: {
+      R: ["What small change could you make to the space where the habit happens?", "Would it still be easy on a busy day?"],
+      I: ["How could you test what makes the habit easier?", "What would tell you if the change you tried helped?"],
+      A: ["What are two ways to make the routine more fun?", "Which idea would you still enjoy after it stops feeling new?"],
+      S: ["Would this habit be easier with company or on your own?", "How could you tell when encouragement starts to feel like pressure?"],
+      E: ["What small win would tell you the change is paying off?", "How would you decide if that win is worth the effort?"],
+      C: ["When else could the routine fit?", "If you miss a day, what would make it easy to start again?"]
+    }
+  },
+  community: {
+    title: 'I want to contribute to my community',
+    hint: 'Helping with a local need, volunteering, or getting involved with a group.',
+    open: {
+      R: ["What hands-on work would you enjoy doing for your community?", "Which practical skill would you like to use or learn?"],
+      I: ["What would you like to understand about a local need?", "How could you find out what people say they need?"],
+      A: ["What could you create for a community effort?", "How could others help shape what you make?"],
+      S: ["Who would you like to work with or support?", "What have they said would help them?"],
+      E: ["What change would you like to help a group make?", "Which part would you like to help lead?"],
+      C: ["How much time could you reliably give?", "What could you still give in a busy month?"]
+    },
+    options: {
+      R: ["Which hands-on role could you try first?", "What would help you tell if the work fits you?"],
+      I: ["How could you find groups already doing this work?", "What would you ask to find out where help is most needed?"],
+      A: ["What new way could you bring attention to a local need?", "What would help your idea reach the people you want to reach?"],
+      S: ["Who could you bring together around this need?", "Whose voice might still be missing?"],
+      E: ["Would you rather join an effort or start something new?", "Where would you be glad to support someone else’s lead?"],
+      C: ["What kind of role would fit the time you have?", "What could the group count on you to do each time?"]
+    }
+  },
+  other: {
+    title: 'Describe my own situation',
+    hint: 'Bring a question or experience of your own in a few words.',
+    open: {
+      R: ["What detail would help someone see what’s happening?", "What would you notice in daily life if it changed?"],
+      I: ["What do you most want to understand about this situation?", "What would you need to learn to answer that?"],
+      A: ["How else could you describe what’s happening?", "What new possibility does that description suggest?"],
+      S: ["Who is part of this situation?", "Whose experience might be easiest to overlook?"],
+      E: ["What would you like to change?", "Which part of that change can you help bring about?"],
+      C: ["Which details matter most right now?", "What might matter later that’s easy to miss today?"]
+    },
+    options: {
+      R: ["What’s one small step you could try?", "What would tell you whether to keep going?"],
+      I: ["How could you find out what you’re missing?", "What could you check first?"],
+      A: ["What would you try if the usual rules didn’t apply?", "What part of that idea could work as things are now?"],
+      S: ["What could you do to meet the needs you’ve noticed?", "Where do their needs and yours differ?"],
+      E: ["Who or what could help you move forward?", "What would you ask for first?"],
+      C: ["What steps would this option take?", "Which step would need to come first?"]
+    }
+  }
+};
+
+// Each lens offers a different question pair for each part of the reflection.
+const LENSES = {
+    expand: {
+      R: ["What could you learn by trying one idea yourself?", "What small test would give you a clear answer?"],
+      I: ["What would help you tell two choices apart?", "Where could you find that information?"],
+      A: ["What new idea could you make from two ideas you have?", "Which part of each idea would you keep?"],
+      S: ["Who could help you see a choice you missed?", "What could you ask them about it?"],
+      E: ["What could you do with someone else’s support?", "What kind of help would matter most?"],
+      C: ["What could change if you did things in a different order?", "Which step would have to stay in place?"]
+    },
+    compare: {
+      R: ["What would you need to make each option work?", "Would time, effort, or supplies be hardest to manage?"],
+      I: ["What could you check about every option?", "What would make that comparison fair?"],
+      A: ["How could you adapt one option to fit your needs?", "What would you change first?"],
+      S: ["How might the same option affect two people differently?", "Where might their needs differ?"],
+      E: ["What could you do on your own?", "What would need someone else’s help or approval?"],
+      C: ["Which options can you fit into the time you have?", "What would be hardest to fit in a busy week?"]
+    },
+    weigh: {
+      R: ["What would tell you an option is working?", "How soon could you notice that change?"],
+      I: ["What could you learn that might change your mind?", "How could you find out?"],
+      A: ["Which option gives you the most room to do things your way?", "What would you do with that freedom?"],
+      S: ["Whose needs matter most in this choice?", "How do your own needs fit with theirs?"],
+      E: ["What would you give up for the result you want?", "What would make that cost too high?"],
+      C: ["Which detail might help you decide?", "How could you check that detail before you decide?"]
+    },
+    reconsider: {
+      R: ["What everyday detail might make an option harder to follow through on?", "How often might that get in the way?"],
+      I: ["What are you taking for granted here?", "What would make you question that belief?"],
+      A: ["How else could this turn out?", "What new option does that bring to mind?"],
+      S: ["How might someone close to this describe what matters?", "What might they notice that you haven’t?"],
+      E: ["What could go better or worse than you expect?", "What early sign would tell you it’s coming?"],
+      C: ["What small detail could matter more later?", "When would you want to check it again?"]
+    }
+};
+const CLOSING = [
+  'What feels clearer now?',
+  'What could you do next, or what would you like more time to think about?'
+];
+const panel = document.querySelector('#panel');
+const steps = [...document.querySelectorAll('.progress li')];
+const answers = Array(QUESTIONS.length).fill(null);
+let page = 0;
+let scores = {};
+let ranked = [];
+let enteredCode = '';
+let chosen = [];
+let editing = false;
+let topic = '';
+let situation = '';
+let deck = [];
+let sessionKey = '';
+let cardIndex = 0;
+let favorite = -1;
+
+function escapeHtml(value) {
+  const replacements = {'&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;'};
+  return String(value).replace(/[&<>"']/g, character => replacements[character]);
+}
+
+function button(label, id, style = '') {
+  return `<button type="button" class="btn ${style}" id="${id}">${label}</button>`;
+}
+
+function bind(id, handler) {
+  document.getElementById(id).addEventListener('click', handler);
+}
+
+function show(step, markup, focus = true) {
+  steps.forEach((item, index) => {
+    if (index === step) item.setAttribute('aria-current', 'step');
+    else item.removeAttribute('aria-current');
+  });
+  panel.innerHTML = markup;
+  if (focus) panel.focus();
+}
+
+function heading(kicker, title, description) {
+  return `<p class="eyebrow">${kicker}</p><h2 id="panel-title">${title}</h2><p class="lede">${description}</p>`;
+}
+
+function assessment(focus = true) {
+  const start = page * 3;
+  const group = QUESTIONS.slice(start, start + 3);
+  const count = answers.filter(value => value !== null).length;
+  show(0, heading(`Step 01 · Round ${page + 1} of 6`, 'Find your interest code',
+    'Imagine or recall doing each activity. How much would you enjoy it? Answer based on what appeals to you, regardless of your current skill level.') + `
+    ${page === 0 ? `<form id="enter-code" class="notice">
+      <label for="existing-code"><strong>Already know your RIASEC code?</strong></label>
+      <p id="existing-hint" class="fine">Enter three different letters in order, using R, I, A, S, E, or C.</p>
+      <div class="code-entry">
+        <input id="existing-code" type="text" value="${enteredCode}" placeholder="e.g. SIA" maxlength="16" autocomplete="off" autocapitalize="characters" spellcheck="false" aria-describedby="existing-hint existing-error">
+        <button type="submit" class="btn secondary">Use my existing code</button>
+      </div>
+      <p id="existing-error" class="error" role="alert" hidden>Enter three different RIASEC letters, such as SIA.</p>
+    </form>` : ''}
+    <p class="fine" id="answered" aria-live="polite">${count} of 18 answered</p>
+    <progress class="meter" value="${count}" max="18" aria-label="Assessment completion"></progress>
+    <div class="questions">${group.map((item, offset) => {
+      const index = start + offset;
+      return `<fieldset class="item"><legend>${index + 1}. ${item.q}</legend><div class="scale">${SCALE.map((label, rating) =>
+        `<label><input type="radio" name="q${index}" data-index="${index}" value="${rating + 1}" ${answers[index] === rating + 1 ? 'checked' : ''}><span>${label}</span></label>`).join('')}</div></fieldset>`;
+    }).join('')}</div>
+    <div class="actions">${page ? button('Previous round','previous','secondary') : ''}${button(page === 5 ? 'See my results' : 'Next round','next')}</div>`, focus);
+  if (page === 0) {
+    const form = document.getElementById('enter-code');
+    const input = document.getElementById('existing-code');
+    const error = document.getElementById('existing-error');
+    input.addEventListener('input', () => {
+      error.hidden = true;
+      input.removeAttribute('aria-invalid');
+    });
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      const code = input.value.toUpperCase().replace(/[\s-]+/g, '');
+      if (!/^[RIASEC]{3}$/.test(code) || new Set(code).size !== 3) {
+        error.hidden = false;
+        input.setAttribute('aria-invalid', 'true');
+        input.focus();
+        return;
+      }
+      if (enteredCode !== code) chosen = [...code];
+      enteredCode = code;
+      editing = false;
+      results();
+    });
+  }
+  const next = document.getElementById('next');
+  const updateProgress = () => {
+    const completed = answers.filter(value => value !== null).length;
+    panel.querySelector('progress').value = completed;
+    panel.querySelector('#answered').textContent = `${completed} of 18 answered`;
+    next.disabled = answers.slice(start, start + 3).includes(null);
+  };
+  updateProgress();
+  panel.querySelector('.questions').addEventListener('change', event => {
+    const {index} = event.target.dataset;
+    const value = Number(event.target.value);
+    if (answers[index] !== value) {
+      answers[index] = value;
+      if (!enteredCode) chosen = [];
+    }
+    updateProgress();
+  });
+  if (page) bind('previous', () => { page--; assessment(); });
+  bind('next', () => {
+    if (page < 5) { page++; assessment(); return; }
+    scores = Object.fromEntries(LETTERS.map(letter => [letter, 0]));
+    QUESTIONS.forEach((item, index) => { scores[item.t] += answers[index]; });
+    ranked = [...LETTERS].sort((a, b) => scores[b] - scores[a]);
+    if (enteredCode || !chosen.length) chosen = ranked.slice(0, 3);
+    enteredCode = '';
+    editing = false;
+    results();
+  });
+}
+
+function chips(letters) {
+  return letters.map(letter => {
+    const [name, color, ink] = TYPES[letter];
+    return `<span class="chip" style="--tone:${color};--chip-ink:${ink}" title="${name}">${letter}</span>`;
+  }).join(' ');
+}
+
+function results() {
+  const fromAssessment = enteredCode === '';
+  const original = fromAssessment ? ranked.slice(0, 3) : [...enteredCode];
+  const displayOrder = fromAssessment ? ranked : [...original, ...LETTERS.filter(letter => !original.includes(letter))];
+  const source = fromAssessment ? 'scored' : 'entered';
+  const ties = fromAssessment ? [...new Set(original.map(letter => scores[letter]))]
+    .map(score => ranked.filter(letter => scores[letter] === score))
+    .filter(group => group.length > 1) : [];
+  show(1, heading('Step 02 · Check-in', 'Does this sound like you?',
+    'Think of a recent activity you enjoyed. Which of these descriptions sounds most like how you naturally engaged with it?') + `
+    <p><strong>${fromAssessment ? "Scored interest code" : "Entered interest code"}</strong> ${chips(original)}</p>
+    ${ties.length ? `<div class="notice"><strong>Some interests share a score.</strong> ${ties.map(group => group.join(' = ')).join(' · ')}. Ties appear in RIASEC order here. You can adjust the reflection code to put the interests that feel most like you first.</div>` : ''}
+    <p class="fine">All six interest categories are below, with ${fromAssessment ? "your three highest scores" : "the three letters you entered"} highlighted. Each lens pairs an interest in certain activities with the vocational intelligence that supports how you engage in them.</p>
+    <div class="tiles">${displayOrder.map((letter, index) => `<article class="tile${index < 3 ? ' top-interest' : ''}" style="--tone:${TYPES[letter][1]}">
+      ${chips([letter])} <span class="fine">${index < 3 ? `<strong>${RANKS[index]} in ${source} code</strong>` : ''}${fromAssessment ? `${index < 3 ? " · " : ""}${scores[letter]}/15` : ''}</span>
+      <h3>${TYPES[letter][0]}</h3><strong>${DESCRIPTIONS[letter].intelligence}</strong>
+      <p>${DESCRIPTIONS[letter].description}</p>
+    </article>`).join('')}</div>
+    <div class="notice"><strong>Reflection code</strong> ${chips(chosen)}<p class="fine">Keep the ${source} order if it feels right, or choose the order and lenses that better reflect your experience.</p>
+    ${editing ? `<div class="order">${RANKS.map((rank, index) => `<label>${rank} lens<select>${displayOrder.map(letter => `<option value="${letter}" ${letter === chosen[index] ? 'selected' : ''}>${letter} · ${TYPES[letter][0]}${fromAssessment ? ` (${scores[letter]})` : ''}</option>`).join('')}</select></label>`).join('')}</div><p class="error" id="code-error" role="alert" hidden>Choose three different lenses.</p>` : ''}</div>
+    <div class="actions">${button(fromAssessment ? 'Review my answers' : 'Change entered code','review','secondary')}${editing ? button(`Use ${source} code`,'restore','secondary') : button('Adjust reflection code','adjust','secondary')}${button('Use this code','use')}</div>`);
+  bind('review', () => {
+    page = 0;
+    assessment();
+    if (!fromAssessment) document.getElementById('existing-code').focus();
+  });
+  if (editing) {
+    bind('restore', () => { chosen = original; editing = false; results(); });
+  } else {
+    bind('adjust', () => { editing = true; results(); panel.querySelector('select').focus(); });
+  }
+  bind('use', () => {
+    if (editing) {
+      const selection = [...panel.querySelectorAll('select')].map(select => select.value);
+      if (new Set(selection).size !== 3) {
+        document.getElementById('code-error').hidden = false;
+        return;
+      }
+      chosen = selection;
+    }
+    editing = false;
+    pickSituation();
+  });
+}
+
+function pickSituation() {
+  show(2, heading('Step 03 · Situation', 'What’s on your mind?',
+    'Pick the situation that comes closest to what you’re considering. Your cards will use that situation and the order of your three lenses.') + `
+    <p><strong>Reflection code</strong> ${chips(chosen)}</p>
+    <div class="topics" role="group" aria-label="Choose a situation">${Object.entries(TOPICS).map(([key, item]) =>
+      `<button class="topic" type="button" data-topic="${key}" aria-pressed="${key === topic}"><strong>${item.title}</strong><span>${item.hint}</span></button>`).join('')}</div>
+    <label for="situation" class="note">A few words about your situation <span class="fine" id="situation-hint">(optional)</span></label>
+    <textarea id="situation" rows="2" maxlength="500" placeholder="Example: A neighbor asked me to help plan a local event.">${escapeHtml(situation)}</textarea>
+    <div class="actions">${button('Back to check-in','check','secondary')}${button('Open my deck','open')}</div>`);
+  const open = document.getElementById('open');
+  const description = document.getElementById('situation');
+  const updateSituation = () => {
+    const custom = topic === 'other';
+    description.required = custom;
+    document.getElementById('situation-hint').textContent = custom ? '(required for your own situation)' : '(optional)';
+    open.disabled = !topic || (custom && !situation.trim());
+  };
+  updateSituation();
+  panel.querySelectorAll('.topic').forEach(item => item.addEventListener('click', () => {
+    topic = item.dataset.topic;
+    panel.querySelectorAll('.topic').forEach(option => option.setAttribute('aria-pressed', String(option === item)));
+    updateSituation();
+  }));
+  description.addEventListener('input', event => {
+    situation = event.target.value;
+    updateSituation();
+  });
+  bind('check', results);
+  bind('open', () => {
+    const key = JSON.stringify([chosen, topic, situation.trim()]);
+    if (key !== sessionKey) {
+      deck = makeDeck(chosen, topic);
+      cardIndex = 0;
+      favorite = -1;
+      sessionKey = key;
+    }
+    reflection();
+  });
+}
+
+function makeDeck([first, second, third], selectedTopic) {
+  return [
+    ['Perspective', first, TOPICS[selectedTopic].open[first]],
+    ['Options', first, TOPICS[selectedTopic].options[first]],
+    ['Options', second, LENSES.expand[second]],
+    ['Choices', second, LENSES.compare[second]],
+    ['Fresh perspective', third, LENSES.reconsider[third]],
+    ['Choices', first, LENSES.weigh[first]],
+    ['Takeaway', '', CLOSING]
+  ].map(([phase, letter, [question, followUp]]) => ({
+    phase, letter, question, followUp, note: '', followUpNote: '', revealed: false, deepOpen: false
+  }));
+}
+
+function reflection(focusReveal = false) {
+  const card = deck[cardIndex];
+  const finalCard = cardIndex === deck.length - 1;
+  const tone = card.letter ? TYPES[card.letter][1] : '#ffaf82';
+  const lens = card.letter ? DESCRIPTIONS[card.letter].intelligence.replace(' Intelligence', ' lens') : 'Your own words';
+  show(3, heading(`Step 04 · Card ${cardIndex + 1} of ${deck.length}`, 'Turn over a question',
+    'Turn over each card. Choose Look deeper for a follow-up, write a note, or move on.') + `
+    <p><strong>${TOPICS[topic].title}</strong> · ${chips(chosen)}</p>
+    ${situation.trim() ? `<p class="notice" style="overflow-wrap:anywhere">${escapeHtml(situation.trim())}</p>` : ''}
+    <article class="deck" style="--tone:${tone}">
+      <p class="phase">${card.phase}</p>
+      ${card.revealed ? `<h3 id="card-question" tabindex="-1">${card.question}</h3><p class="fine">${card.letter ? `${card.letter} · ` : ''}${lens}</p>` :
+      `<h3>${finalCard ? "What will you take with you?" : "What will this lens reveal?"}</h3><p class="fine">${card.letter ? `${card.letter} · ` : ''}${lens}</p>${button('Reveal question','reveal','accent')}`}
+    </article>
+    ${card.revealed ? `<label class="note" for="note">${finalCard ? 'My takeaway' : 'My notes'} <span class="fine">(optional)</span></label>
+      <textarea id="note" rows="3" maxlength="2000">${escapeHtml(card.note)}</textarea>
+      <div class="deeper">
+        <button type="button" class="btn secondary" id="deeper" aria-expanded="${card.deepOpen}" aria-controls="follow-up">Look deeper</button>
+        <div id="follow-up"${card.deepOpen ? '' : ' hidden'}>
+          <p id="follow-up-question"><strong>${card.followUp}</strong></p>
+          <label class="note" for="follow-up-note">My follow-up notes <span class="fine">(optional)</span></label>
+          <textarea id="follow-up-note" rows="3" maxlength="2000" aria-describedby="follow-up-question">${escapeHtml(card.followUpNote)}</textarea>
+        </div>
+      </div>
+      ${finalCard ? '' : `<label class="favorite"><input id="favorite" type="checkbox" ${favorite === cardIndex ? 'checked' : ''}> The question that changed how I see it</label><p class="fine">You can keep one favorite question.</p>`}` : ''}
+    <div class="actions">${cardIndex ? button('Previous card','back-card','secondary') : button('Back to situation','back-topic','secondary')}${button(finalCard ? 'See my reflection' : card.revealed ? 'Next card' : 'Skip card','advance')}</div>`);
+  if (cardIndex) bind('back-card', () => { cardIndex--; reflection(); });
+  else bind('back-topic', () => pickSituation());
+  bind('advance', () => {
+    if (finalCard) recap();
+    else { cardIndex++; reflection(); }
+  });
+  if (card.revealed) {
+    document.getElementById('note').addEventListener('input', event => { card.note = event.target.value; });
+    const deeper = document.getElementById('deeper');
+    deeper.addEventListener('click', () => {
+      card.deepOpen = !card.deepOpen;
+      deeper.setAttribute('aria-expanded', String(card.deepOpen));
+      document.getElementById('follow-up').hidden = !card.deepOpen;
+    });
+    document.getElementById('follow-up-note').addEventListener('input', event => { card.followUpNote = event.target.value; });
+    if (!finalCard) document.getElementById('favorite').addEventListener('change', event => { favorite = event.target.checked ? cardIndex : -1; });
+    if (focusReveal) document.getElementById('card-question').focus();
+  } else {
+    bind('reveal', () => { card.revealed = true; reflection(true); });
+  }
+}
+
+function recap() {
+  const noted = deck.flatMap((card, index) => [
+    {question: card.question, note: index < deck.length - 1 ? card.note.trim() : ''},
+    {question: `Look deeper · ${card.followUp}`, note: card.followUpNote.trim()}
+  ]).filter(entry => entry.note);
+  const takeaway = deck.at(-1).note.trim();
+  show(3, heading('Step 04 · Reflection complete', 'What you’re taking with you',
+    'Here’s what you chose to keep from this session.') + `
+    <p><strong>${TOPICS[topic].title}</strong> · ${chips(chosen)}</p>
+    ${situation.trim() ? `<p class="notice" style="overflow-wrap:anywhere">${escapeHtml(situation.trim())}</p>` : ''}
+    <ul class="recap">
+      ${favorite >= 0 ? `<li><strong>My favorite question</strong><p>${deck[favorite].question}</p></li>` : ''}
+      ${takeaway ? `<li><strong>My takeaway</strong><p>${escapeHtml(takeaway)}</p></li>` : ''}
+      ${noted.map(card => `<li><strong>${card.question}</strong><p>${escapeHtml(card.note.trim())}</p></li>`).join('')}
+    </ul>
+    ${!takeaway && !noted.length && favorite < 0 ? '<p class="fine">You completed a reflection without saving a note or favorite.</p>' : ''}
+    <div class="actions">${button('Download reflection','download')}${button('Print','print','secondary')}${button('Back to cards','back','secondary')}${button('Choose another situation','another','secondary')}</div>`);
+  bind('download', () => {
+    const lines = [
+      'ThinkTurn · My reflection', `Reflection code: ${chosen.join('')}`,
+      TOPICS[topic].title, situation.trim(),
+      favorite >= 0 ? `My favorite question\n${deck[favorite].question}` : '',
+      takeaway ? `My takeaway\n${takeaway}` : '',
+      ...noted.map(card => `${card.question}\n${card.note.trim()}`)
+    ].filter(Boolean);
+    const url = URL.createObjectURL(new Blob([lines.join('\n\n')], {type:'text/plain;charset=utf-8'}));
+    const link = document.createElement('a');
+    link.href = url;
+    link.download = 'thinkturn-reflection.txt';
+    link.click();
+    setTimeout(() => URL.revokeObjectURL(url), 1000);
+  });
+  bind('print', () => window.print());
+  bind('back', () => reflection());
+  bind('another', () => {
+    topic = '';
+    situation = '';
+    sessionKey = '';
+    pickSituation();
+  });
+}
+
+assessment(false);
+
+</script>
+<script>
+(() => {
+  if (!window.isSecureContext || !/^https?:$/.test(location.protocol)) return;
+
+  const help = document.getElementById('install-help');
+  const install = document.getElementById('install-app');
+  const standalone = window.matchMedia('(display-mode: standalone)');
+  let installPrompt;
+
+  if (!standalone.matches && !navigator.standalone) help.hidden = false;
+
+  window.addEventListener('beforeinstallprompt', event => {
+    event.preventDefault();
+    installPrompt = event;
+    install.hidden = false;
+  });
+
+  install.addEventListener('click', async () => {
+    const prompt = installPrompt;
+    installPrompt = null;
+    install.hidden = true;
+    if (prompt) await prompt.prompt();
+  });
+
+  window.addEventListener('appinstalled', () => {
+    help.hidden = true;
+    installPrompt = null;
+  });
+
+  if ('serviceWorker' in navigator) {
+    navigator.serviceWorker.register('./sw.js').catch(error => {
+      console.warn('Offline setup could not be completed.', error);
+    });
+  }
+})();
+</script>
+</body>
+</html>
