@@ -1,5 +1,5 @@
 const CACHE_PREFIX = `perspective-deck:${self.registration.scope}:`;
-const CACHE_NAME = `${CACHE_PREFIX}544b530bc399`;
+const CACHE_NAME = `${CACHE_PREFIX}2ee2720362fc`;
 const APP_PATHS = [
   'index.html',
   'manifest.webmanifest',

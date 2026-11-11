@@ -734,7 +734,7 @@ function recap() {
       ${noted.map(card => `<li><strong>${card.question}</strong><p>${escapeHtml(card.note.trim())}</p></li>`).join('')}
     </ul>
     ${!takeaway && !noted.length && favorite < 0 ? '<p class="fine">You completed a reflection without saving a note or favorite.</p>' : ''}
-    <div class="actions">${button('Download reflection','download')}${button('Print','print','secondary')}${button('Back to cards','back','secondary')}${button('Choose another situation','another','secondary')}</div>`);
+    <div class="actions">${button('Download reflection','download')}${button('Print','print','secondary')}${button('Back to cards','back','secondary')}${button('Choose another situation','another','secondary')}${button('Clear and start over','clear','secondary')}</div>`);
   bind('download', () => {
     const lines = [
       'ThinkTurn · My reflection', `Reflection code: ${chosen.join('')}`,
@@ -752,6 +752,24 @@ function recap() {
   });
   bind('print', () => window.print());
   bind('back', () => reflection());
+  bind('clear', () => {
+    answers.fill(null);
+    page = 0;
+    scores = {};
+    ranked = [];
+    enteredCode = '';
+    chosen = [];
+    editing = false;
+    topic = '';
+    situation = '';
+    deck = [];
+    sessionKey = '';
+    cardIndex = 0;
+    favorite = -1;
+    assessment(false);
+    panel.focus({preventScroll: true});
+    document.querySelector('main').scrollIntoView({block: 'start', behavior: 'instant'});
+  });
   bind('another', () => {
     topic = '';
     situation = '';
